@@ -42,7 +42,6 @@ pipeline {
                     withSonarQubeEnv("${env.SONAR_SERVER}") {
                             sh """
                                 mvn sonar:sonar \
-                                -Dsonar.host.url=https://sonarcloud.io \
                                 -Dsonar.organization=dmtorrico \
                                 -Dsonar.projectKey=dmtorrico_spring-boot-h2-database-crud \
                                 -Dsonar.projectName=spring-boot-h2-database-crud
