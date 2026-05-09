@@ -36,15 +36,10 @@ pipeline {
 
                         withSonarQubeEnv('sonarqube-server') {
 
-                            withCredentials([
-                                string(credentialsId: 'sonar-token', variable: 'SONARQUBE_TOKEN')
-                            ]) {
-
                                 sh '''
                                     mvn sonar:sonar \
                                     -Dsonar.projectKey=spring-boot-h2-database-crud \
-                                    -Dsonar.projectName=spring-boot-h2-database-crud \
-                                    -Dsonar.token=$SONAR_TOKEN
+                                    -Dsonar.projectName=spring-boot-h2-database-crud
                                 '''
                             }
                         }
