@@ -36,22 +36,23 @@ pipeline {
                     }
                 }
 
-                stage('Análisis SonarCloud') {
+                stage('SonarCloud Analysis') {
 
                     steps {
 
-                        withCredentials([string(credentialsId: 'sonarqube_token', variable: 'SONAR_TOKEN')]) {
+                        withCredentials([string(
+                            credentialsId: 'sonarqube-token',
+                            variable: 'SONAR_TOKEN'
+                        )]) {
 
-                            withSonarQubeEnv("${env.SONAR_SERVER}") {
-                                sh """
-                                    mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.0.0.4389:sonar \
-                                    -Dsonar.organization=dmtorrico \
-                                    -Dsonar.projectKey=${PROJECT_KEY} \
-                                    -Dsonar.projectName=${PROJECT_NAME} \
-                                    -Dsonar.host.url=https://sonarcloud.io \
-                                    -Dsonar.token=${SONAR_TOKEN}
-                                """
-                            }
+                            sh '''
+                                mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.0.0.4389:sonar \
+                                -Dsonar.host.url=https://sonarcloud.io \
+                                -Dsonar.organization=dmtorrico \
+                                -Dsonar.projectKey=dmtorrico_spring-boot-h2-database-crud \
+                                -Dsonar.projectName=spring-boot-h2-database-crud \
+                                -Dsonar.token=$SONAR_TOKEN
+                            '''
                         }
                     }
                 }
