@@ -2,11 +2,6 @@ pipeline {
 
     agent any
 
-    environment {
-        SONAR_SERVER = 'sonarqube-server'
-        PROJECT_KEY = 'dmtorrico_spring-boot-h2-database-crud'
-        PROJECT_NAME = 'spring-boot-h2-database-crud'
-    }
 
     tools {
         maven 'maven-default'
@@ -45,14 +40,14 @@ pipeline {
                             variable: 'SONAR_TOKEN'
                         )]) {
 
-                            sh '''
-                                mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.0.0.4389:sonar \
+                            sh """
+                                mvn sonar:sonar \
                                 -Dsonar.host.url=https://sonarcloud.io \
                                 -Dsonar.organization=dmtorrico \
                                 -Dsonar.projectKey=dmtorrico_spring-boot-h2-database-crud \
                                 -Dsonar.projectName=spring-boot-h2-database-crud \
                                 -Dsonar.token=$SONAR_TOKEN
-                            '''
+                            """
                         }
                     }
                 }
