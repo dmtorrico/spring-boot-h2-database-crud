@@ -2,6 +2,12 @@ pipeline {
 
     agent any
 
+    environment {
+        SONAR_SERVER = 'sonarqube-server'
+        // EXTRAEMOS DINÁMICAMENTE EL NOMBRE DEL REPO
+        // Esto evita que tengas que cambiar el nombre manualmente en cada proyecto
+        REPO_NAME = "${env.GIT_URL.split('/').last().split('\\.').first()}"
+    }
 
     tools {
         maven 'maven-default'
@@ -33,20 +39,13 @@ pipeline {
 
                 stage('SonarCloud Analysis') {
 
-                    steps {
-
-                        withCredentials([string(
-                            credentialsId: 'sonarqube_token',
-                            variable: 'SONAR_TOKEN'
-                        )]) {
-
+                    withSonarQubeEnv("${env.SONAR_SERVER}") {
                             sh """
                                 mvn sonar:sonar \
                                 -Dsonar.host.url=https://sonarcloud.io \
                                 -Dsonar.organization=dmtorrico \
                                 -Dsonar.projectKey=dmtorrico_spring-boot-h2-database-crud \
-                                -Dsonar.projectName=spring-boot-h2-database-crud \
-                                -Dsonar.token=$SONAR_TOKEN
+                                -Dsonar.projectName=spring-boot-h2-database-crud
                             """
                         }
                     }
