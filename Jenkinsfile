@@ -39,13 +39,15 @@ pipeline {
 
                 stage('SonarCloud Analysis') {
 
-                    withSonarQubeEnv("${env.SONAR_SERVER}") {
-                            sh """
-                                mvn sonar:sonar \
-                                -Dsonar.organization=dmtorrico \
-                                -Dsonar.projectKey=dmtorrico_spring-boot-h2-database-crud \
-                                -Dsonar.projectName=spring-boot-h2-database-crud
-                            """
+                    steps {
+                        withSonarQubeEnv("${env.SONAR_SERVER}") {
+                                sh """
+                                    mvn sonar:sonar \
+                                    -Dsonar.organization=dmtorrico \
+                                    -Dsonar.projectKey=dmtorrico_spring-boot-h2-database-crud \
+                                    -Dsonar.projectName=spring-boot-h2-database-crud
+                                """
+                        }
                     }
                 }
             }
