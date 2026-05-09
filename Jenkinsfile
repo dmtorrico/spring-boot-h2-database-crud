@@ -40,15 +40,19 @@ pipeline {
                 stage('SonarCloud Analysis') {
 
                     steps {
-                        withSonarQubeEnv("${env.SONAR_SERVER}") {
-                                sh """
-                                    mvn sonar:sonar \
-                                    -Dsonar.organization=dmtorrico \
-                                    -Dsonar.projectKey=dmtorrico_spring-boot-h2-database-crud \
-                                    -Dsonar.projectName=spring-boot-h2-database-crud \
-                                    -Dsonar.token=${SONAR_TOKEN} \
-                                    -X
-                                """
+                        // 'sonarqube_token' debe ser el ID de tu credencial en Jenkins
+                        withCredentials([string(credentialsId: 'sonarqube_token', variable: 'SONAR_TOKEN')]) {
+
+                            withSonarQubeEnv("${env.SONAR_SERVER}") {
+                                    sh """
+                                        mvn sonar:sonar \
+                                        -Dsonar.organization=dmtorrico \
+                                        -Dsonar.projectKey=dmtorrico_spring-boot-h2-database-crud \
+                                        -Dsonar.projectName=spring-boot-h2-database-crud \
+                                        -Dsonar.token=${SONAR_TOKEN} \
+                                        -X
+                                    """
+                            }
                         }
                     }
                 }
