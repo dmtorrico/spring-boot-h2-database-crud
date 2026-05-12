@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bezkoder</groupId>
-	<artifactId>spring-boot-jpa-h2</artifactId>
+	<artifactId>spring-boot-h2-database-crud</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-jpa-h2</name>
+	<name>spring-boot-h2-database-crud</name>
 	<description>Spring Boot JPA + H2 database example - CRUD Rest Apis</description>
 
 	<properties>
